@@ -3,13 +3,13 @@
 	"id": "auto-plant-crops",
 	"version": "${version}",
 	"name": "Auto Plant Crops",
-	"description": "Auto Plant Crops upon being brokeen",
+	"description": "Auto Plant Crops upon being broken",
 	"authors": [
 		"Tr4nt"
 	],
 	"contact": {
 		"homepage": "None/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Tr4nter/auto-plant-crop-1.19.4"
 	},
 	"license": "MIT",
 	"icon": "assets/auto-plant-crops/icon.png",
