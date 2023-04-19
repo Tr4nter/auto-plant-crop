@@ -1,10 +1,16 @@
 # auto-plant-crop-1.19.4
 
 This mod requires [Fabric](https://fabricmc.net/)
+Features:
 
-Auto plant seeds upon breaking its crop, Only wheat atm
-Seed must be in hotbar to work!
+    Auto plant seed upon breaking it
+    Auto plant seed upon walking over farmland while holding seeds
 
-[Curseforge](https://legacy.curseforge.com/minecraft/mc-mods/auto-plant-crops-1-19-4)
+ 
 
-![ezgif-4-ebdfb95ce9](https://user-images.githubusercontent.com/126683818/232982961-297bdf5a-f9f5-43bc-b77f-ba39b5d5cee2.gif)
+Auto Plant Crops also works in mutliplayer!
+
+[Curseforge](https://www.curseforge.com/minecraft/mc-mods/auto-plant-crops)
+
+[![Youtube Video](https://img.youtube.com/vi/ZdvxoAqrtek/0.jpg)](https://www.youtube.com/watch?v=ZdvxoAqrtek)
+requires seed to be in hotbar to work.
