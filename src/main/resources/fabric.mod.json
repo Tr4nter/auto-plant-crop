@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "auto-plant-crops",
+	"version": "${version}",
+	"name": "Auto Plant Crops",
+	"description": "Auto Plant Crops upon being brokeen",
+	"authors": [
+		"Tr4nt"
+	],
+	"contact": {
+		"homepage": "None/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/auto-plant-crops/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "tr4nt.autoplantcrops.AutoPlantCrops"
+		],
+		"fabric-datagen": [
+			"tr4nt.autoplantcrops.ExampleModDataGenerator"
+		],
+		"client" : [
+			"tr4nt.autoplantcrops.AutoPlantCropsClient"
+		]
+	},
+	"mixins": [
+		"auto-plant-crops.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.19",
+		"minecraft": "~1.19.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
