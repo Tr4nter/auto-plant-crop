@@ -13,4 +13,5 @@ Auto Plant Crops also works in mutliplayer!
 [Curseforge](https://www.curseforge.com/minecraft/mc-mods/auto-plant-crops)
 
 [![Youtube Video](https://img.youtube.com/vi/ZdvxoAqrtek/0.jpg)](https://www.youtube.com/watch?v=ZdvxoAqrtek)
+
 requires seed to be in hotbar to work.
