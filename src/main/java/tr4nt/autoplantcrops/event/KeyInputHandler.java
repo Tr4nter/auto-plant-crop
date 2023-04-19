@@ -17,14 +17,12 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
 
+import static tr4nt.autoplantcrops.Utils.Utils.switchToSeed;
+
 public class KeyInputHandler {
     public static final  String AutoCropCategory = "key.AutoCropCategory.test";
     public static final String Shout = "key.tr4nt.autoplantcrops.shout";
     public static KeyBinding testKey;
-    public static String getStackName(ItemStack stack)
-    {
-        return stack.toString().split(" ")[1].strip();
-    }
 
     public static void swapSlots(MinecraftClient client, int sourceSlot, int destSlot){
         int syncId = client.player.playerScreenHandler.syncId;
@@ -33,33 +31,7 @@ public class KeyInputHandler {
         client.interactionManager.clickSlot(syncId, destSlot, 0, SlotActionType.PICKUP, client.player);
 
     }
-    public static void switchToSeed(MinecraftClient client)
-    {
-        for (int i=0; i<=35; i++)
-        {
-            ItemStack stack= client.player.getInventory().getStack(i);
 
-            if (getStackName(stack).equals("wheat_seeds"))
-            {
-                if (i <= 8) {
-                    client.player.getInventory().selectedSlot = i;
-                }
-//                } else
-//                {
-//                    int emptySlot = client.player.getInventory().getEmptySlot();
-//                    if (emptySlot == -1 )
-//                    {
-//                        emptySlot = 0;
-//                    }
-//
-//                    swapSlots(client, i , emptySlot);
-//
-//                }
-
-                break;
-            }
-        }
-    }
     public static void registerKeyInput()
     {
         ClientTickEvents.END_CLIENT_TICK.register(client ->
@@ -76,7 +48,7 @@ public class KeyInputHandler {
                     {
                         switchToSeed(client);
 //                        client.options.useKey.setPressed(true);
-                        PlaceBlock.placeSeed(client, hit);
+                        PlaceBlock.placeSeed(client, res);
 
                     }
                 }

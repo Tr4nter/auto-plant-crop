@@ -19,46 +19,10 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
+import static tr4nt.autoplantcrops.Utils.Utils.getStackName;
+import static tr4nt.autoplantcrops.Utils.Utils.switchToSeed;
+
 public class BlockBreakEvent implements AttackBlockCallback {
-    public String getStackName(ItemStack stack)
-    {
-        return stack.toString().split(" ")[1].strip();
-    }
-
-    public void swapSlots(MinecraftClient client, int sourceSlot, int destSlot){
-        int syncId = client.player.playerScreenHandler.syncId;
-
-        client.interactionManager.clickSlot(syncId, sourceSlot, 0, SlotActionType.PICKUP, client.player);
-        client.interactionManager.clickSlot(syncId, destSlot, 0, SlotActionType.PICKUP, client.player);
-
-    }
-    public void switchToSeed(MinecraftClient client)
-    {
-        for (int i=0; i<=35; i++)
-        {
-            ItemStack stack= client.player.getInventory().getStack(i);
-
-            if (getStackName(stack).equals("wheat_seeds"))
-            {
-                if (i <= 8) {
-                    client.player.getInventory().selectedSlot = i;
-                }
-//                } else
-//                {
-//                    int emptySlot = client.player.getInventory().getEmptySlot();
-//                    if (emptySlot == -1 )
-//                    {
-//                        emptySlot = 0;
-//                    }
-//
-//                    swapSlots(client, i , emptySlot);
-//
-//                }
-
-                break;
-            }
-        }
-    }
 
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
@@ -81,7 +45,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
                     res = new BlockHitResult(res.getPos().subtract(new Vec3d(0,1,0)), res.getSide(), res.getBlockPos().subtract(new Vec3i(0,1,0)), res.isInsideBlock());
 //                    if (maybe.getBlockPos().equals(pos.down()))
 //                    {
-                    PlaceBlock.placeSeed(client, hit);
+                    PlaceBlock.placeSeed(client, res);
 
 //                    client.options.useKey.setPressed(true);
 
@@ -109,9 +73,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
                 {
                     BlockHitResult res = (BlockHitResult) hit;
                     res = new BlockHitResult(res.getPos().subtract(new Vec3d(0,1,0)), res.getSide(), res.getBlockPos().subtract(new Vec3i(0,1,0)), res.isInsideBlock());
-
-                    PlaceBlock.placeSeed(client, hit);
-                    client.options.useKey.setPressed(true);
+                    PlaceBlock.placeSeed(client, res);
                 }
             }
 

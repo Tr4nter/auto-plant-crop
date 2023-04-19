@@ -12,11 +12,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
+import static tr4nt.autoplantcrops.Utils.Utils.getStackName;
+
 public class PlaceBlockEvent implements UseBlockCallback {
-    public String getStackName(ItemStack stack)
-    {
-        return stack.toString().split(" ")[1].strip();
-    }
 
 
     @Override

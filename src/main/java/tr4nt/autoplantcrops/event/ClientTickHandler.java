@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.Camera;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
@@ -20,58 +21,40 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.networking.ModMessages;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 
-public class ClientTickHandler implements ClientTickEvents.StartTick {
-    private ClientPlayerInteractionManager cpi;
+import static tr4nt.autoplantcrops.Utils.Utils.getStackName;
+import static tr4nt.autoplantcrops.event.PlaceBlock.placeSeed;
 
-    public String getStackName(ItemStack stack)
-    {
-        return stack.toString().split(" ")[1].strip();
-    }
+public class ClientTickHandler implements ClientTickEvents.StartTick {
+
 
     @Override
     public void onStartTick(MinecraftClient client) {
 
         if (client.player != null) {
-            HitResult hit = client.crosshairTarget;
-            if (hit != null)
-            {
-                try{
-                    BlockHitResult res = (BlockHitResult) hit;
-                    res = new BlockHitResult(res.getPos().subtract(new Vec3d(0,1,0)), res.getSide(), res.getBlockPos().subtract(new Vec3i(0,1,0)), res.isInsideBlock());
-                    BlockHitResult blockHitResult = (BlockHitResult) hit;
-                    BlockState state = client.world.getBlockState(blockHitResult.getBlockPos());
-                    Block block = state.getBlock();
-                    if ( block instanceof CropBlock || block instanceof StemBlock ) {
+           BlockState state = client.player.getSteppingBlockState();
+           Block block = state.getBlock();
+           if (block instanceof FarmlandBlock && AutoPlantCropsClient.conf.plantWhenWalkedOver())
+           {
+               PlayerInventory inv = client.player.getInventory();
+               if (getStackName(inv.getStack(inv.selectedSlot)).equals("wheat_seeds"))
+               {
+                   HitResult hit = client.crosshairTarget;
+                   if (hit != null)
+                   {
+                       BlockHitResult res = (BlockHitResult) hit;
+                       res = new BlockHitResult(client.player.getSteppingPos().toCenterPos(),Direction.UP, client.player.getSteppingPos(), res.isInsideBlock());
 
-                        CropBlock cropBlock1 = (CropBlock) block;
+                       client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res);
+                   }
 
-                        int age = state.get(cropBlock1.getAgeProperty());
-                        if (age == cropBlock1.getMaxAge()) {
-
-                            PlaceBlock.placeSeed(client, hit);
-
-
-//                        client.player.setVelocityClient(0,0,0);
-//                        client.options.attackKey.setPressed(true);
-
-
-//                        PacketByteBuf buf = PacketByteBufs.create();
-//                        buf.writeBlockPos(client.player.getBlockPos());
-//                        ClientPlayNetworking.send(ModMessages.breakBlock, buf);
-                        }
-                    }
-
-                }catch(ClassCastException e){}
-
-
-
-
-            }
+               }
+           }
 
         }
 
