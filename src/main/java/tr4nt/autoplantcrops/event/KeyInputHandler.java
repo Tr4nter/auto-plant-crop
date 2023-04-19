@@ -75,7 +75,7 @@ public class KeyInputHandler {
                     if (block instanceof FarmlandBlock)
                     {
                         switchToSeed(client);
-                        client.options.useKey.setPressed(true);
+//                        client.options.useKey.setPressed(true);
                         PlaceBlock.placeSeed(client, hit);
 
                     }

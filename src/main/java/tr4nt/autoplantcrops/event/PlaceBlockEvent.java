@@ -33,7 +33,7 @@ public class PlaceBlockEvent implements UseBlockCallback {
                 if (block instanceof FarmlandBlock || block instanceof CropBlock || block instanceof StemBlock)
                 {
 
-                    MinecraftClient.getInstance().options.useKey.setPressed(false);
+//                    MinecraftClient.getInstance().options.useKey.setPressed(false);
 
                 }
             }

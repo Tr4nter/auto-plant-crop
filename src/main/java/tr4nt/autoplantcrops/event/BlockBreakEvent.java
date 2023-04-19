@@ -83,7 +83,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
 //                    {
                     PlaceBlock.placeSeed(client, hit);
 
-                    client.options.useKey.setPressed(true);
+//                    client.options.useKey.setPressed(true);
 
 //                    }
 
