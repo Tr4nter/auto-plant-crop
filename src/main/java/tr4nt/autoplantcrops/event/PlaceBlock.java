@@ -11,9 +11,11 @@ public class PlaceBlock {
     public static void placeSeed(MinecraftClient client, BlockHitResult hit)
     {
 
-         BlockHitResult temp = hit;
-        temp = new BlockHitResult(temp.getPos(), Direction.UP, temp.getBlockPos(), temp.isInsideBlock());
-       if (ConfigFile.getValue("plantMultiple").getAsBoolean())
+        BlockHitResult temp = hit;
+        BlockHitResult tempThe = new BlockHitResult(hit.getPos(), Direction.UP, hit.getBlockPos(), hit.isInsideBlock());
+        client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),tempThe);
+
+        if (ConfigFile.getValue("plantMultiple").getAsBoolean())
         {
             BlockHitResult res1 = new BlockHitResult(temp.getPos().add(0,0,1), Direction.UP, temp.getBlockPos().add(new Vec3i(0,0,1)), temp.isInsideBlock());
             BlockHitResult res2 = new BlockHitResult(temp.getPos().subtract(0,0,1), Direction.UP, temp.getBlockPos().subtract(new Vec3i(0,0,1)), temp.isInsideBlock());
@@ -27,7 +29,6 @@ public class PlaceBlock {
         }
 
 
-        client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),temp);
 
     }
 

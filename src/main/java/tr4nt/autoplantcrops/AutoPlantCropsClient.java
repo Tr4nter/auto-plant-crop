@@ -1,8 +1,5 @@
 package tr4nt.autoplantcrops;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import it.unimi.dsi.fastutil.Hash;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
@@ -13,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.ClientTickHandler;
-import tr4nt.autoplantcrops.event.KeyInputHandler;
 import tr4nt.autoplantcrops.event.PlaceBlockEvent;
 import tr4nt.autoplantcrops.networking.ModMessages;
+import tr4nt.autoplantcrops.scheduler.Ticker;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 
@@ -51,8 +46,10 @@ public class AutoPlantCropsClient implements ClientModInitializer {
 
 
         ClientTickEvents.START_CLIENT_TICK.register(new ClientTickHandler());
+        Ticker ticka = new Ticker();
+        ClientTickEvents.START_CLIENT_TICK.register(ticka);
+
         ModMessages.registerS2C();
-        KeyInputHandler.register();
         AttackBlockCallback.EVENT.register(new BlockBreakEvent());
         UseBlockCallback.EVENT.register(new PlaceBlockEvent());
     }
