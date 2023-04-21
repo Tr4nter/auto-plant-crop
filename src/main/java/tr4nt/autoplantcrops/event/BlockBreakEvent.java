@@ -37,7 +37,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
             CropBlock cropBlock1 = (CropBlock) block;
 
             int age = cropBlockState.get(cropBlock1.getAgeProperty());
-            if (ConfigFile.getValue("plantOnWalkOver").getAsBoolean() || age == cropBlock1.getMaxAge()) {
+            if (ConfigFile.getValue("plantDespiteAge").getAsBoolean() || age == cropBlock1.getMaxAge()) {
 //                            client.player.();
 
                 HitResult hit = client.crosshairTarget;
