@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
+import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
             CropBlock cropBlock1 = (CropBlock) block;
 
             int age = cropBlockState.get(cropBlock1.getAgeProperty());
-            if (age == cropBlock1.getMaxAge()) {
+            if (ConfigFile.getValue("plantOnWalkOver").getAsBoolean() || age == cropBlock1.getMaxAge()) {
 //                            client.player.();
 
                 HitResult hit = client.crosshairTarget;

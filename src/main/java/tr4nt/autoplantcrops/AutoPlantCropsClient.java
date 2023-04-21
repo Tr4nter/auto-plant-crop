@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.ClientTickHandler;
-import tr4nt.autoplantcrops.event.PlaceBlockEvent;
-import tr4nt.autoplantcrops.networking.ModMessages;
+
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.util.HashMap;
@@ -42,6 +41,10 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         ConfigFile.addValue(newVal1, false);
 
 
+        Map<String, String>newVal2 = new HashMap<String, String>();
+
+        newVal2.put("plantDespiteAge", "true");
+        ConfigFile.addValue(newVal2, false);
 
 
 
@@ -49,9 +52,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         Ticker ticka = new Ticker();
         ClientTickEvents.START_CLIENT_TICK.register(ticka);
 
-        ModMessages.registerS2C();
         AttackBlockCallback.EVENT.register(new BlockBreakEvent());
-        UseBlockCallback.EVENT.register(new PlaceBlockEvent());
     }
 
 

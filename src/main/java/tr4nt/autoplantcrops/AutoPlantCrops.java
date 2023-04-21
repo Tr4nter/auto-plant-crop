@@ -6,7 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.screen.slot.SlotActionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tr4nt.autoplantcrops.networking.ModMessages;
 
 public class AutoPlantCrops implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -19,7 +18,6 @@ public class AutoPlantCrops implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		ModMessages.registerC2S();
 		LOGGER.info("Hello Fabric world!");
 	}
 }
