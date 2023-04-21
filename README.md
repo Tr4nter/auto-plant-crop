@@ -1,11 +1,12 @@
 # auto-plant-crop-1.19.4
 
 This mod requires [Fabric](https://fabricmc.net/)
+
 Features:
 
     Auto plant seed upon breaking it
     Auto plant seed upon walking over farmland while holding seeds
-
+    Supports almost all crops
  
 
 Auto Plant Crops also works in mutliplayer!
