@@ -5,6 +5,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 
 import java.sql.Date;
@@ -51,6 +53,17 @@ public class Utils {
     public static long tick()
     {
         return Date.from(Instant.now()).getTime();
+    }
+
+    public static BlockHitResult getHit(MinecraftClient client)
+    {
+        HitResult hit = client.crosshairTarget;
+        if (hit != null)
+        {
+            return (BlockHitResult) hit;
+        } else {
+            return null;
+        }
     }
 
 }

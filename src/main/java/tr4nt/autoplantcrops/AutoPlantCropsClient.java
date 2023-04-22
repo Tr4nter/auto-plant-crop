@@ -46,6 +46,10 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         newVal2.put("plantDespiteAge", "true");
         ConfigFile.addValue(newVal2, false);
 
+        Map<String, String>newVal3 = new HashMap<String, String>();
+
+        newVal3.put("autoBoneMeal", "true");
+        ConfigFile.addValue(newVal3, false);
 
 
         ClientTickEvents.START_CLIENT_TICK.register(new ClientTickHandler());

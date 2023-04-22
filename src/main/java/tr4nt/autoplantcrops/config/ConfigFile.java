@@ -80,7 +80,6 @@ public class ConfigFile {
 
         }
 
-
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(configFilePath.toString());
@@ -89,7 +88,7 @@ public class ConfigFile {
         }
         pw.write(obj.toString());
         pw.close();
-
+        format();
     }
 
     public static JsonElement getValue(String key)  {
@@ -102,5 +101,43 @@ public class ConfigFile {
         JsonObject obj = JsonParser.parseString(s).getAsJsonObject();
 
         return obj.get(key);
+    }
+
+    private static void format() {
+        String buff = "";
+        String s = null;
+        try {
+            s = Files.readString(configFilePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (i != 0 ) {
+               char prevChar =  s.charAt(i-1);
+
+               if (prevChar ==',' || prevChar == '{' || (i == s.length()-1))
+               {
+                   if (i == s.length()-1)
+                   {
+                       buff += "\n";
+                   } else
+                   {
+                       buff += "\n\t";
+                   }
+               }
+
+            }
+            buff += c;
+        }
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(configFilePath.toString());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        pw.write(buff);
+        pw.close();
+
     }
 }
