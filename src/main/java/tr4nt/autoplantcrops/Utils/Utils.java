@@ -11,13 +11,19 @@ import tr4nt.autoplantcrops.AutoPlantCropsClient;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
     public static String getStackName(ItemStack stack) {
         return stack.toString().split(" ")[1].strip();
     }
 
-    public static String getBlockName(Block block) {return block.getName().toString().toLowerCase();}
+    public static String getBlockName(Block block)
+    {
+        return block.getTranslationKey().split("[.]")[2].strip();
+    }
+
     public static void swapSlots(MinecraftClient client, int sourceSlot, int destSlot) {
         int syncId = client.player.playerScreenHandler.syncId;
 
@@ -26,7 +32,7 @@ public class Utils {
 
     }
 
-    public static void switchToItem(MinecraftClient client, ItemStack item) {
+    public static int switchToItem(MinecraftClient client, ItemStack item) {
         for (int i = 0; i <= 35; i++) {
             ItemStack stack = client.player.getInventory().getStack(i);
             if (getStackName(stack).equals(getStackName(item))) {
@@ -44,10 +50,17 @@ public class Utils {
 //                    swapSlots(client, i , emptySlot);
 //
 //                }
-
-                break;
+                return i;
             }
         }
+        return -1;
+    }
+
+    public static void switchToSlot(MinecraftClient client, int slot)
+    {
+        assert client.player != null;
+        client.player.getInventory().selectedSlot = slot;
+
     }
 
     public static long tick()
@@ -65,5 +78,12 @@ public class Utils {
             return null;
         }
     }
+
+    public static HashMap<String, String> newOption(String s1, String s2) {
+        HashMap<String, String> temp = new HashMap<>();
+        temp.put(s1,s2);
+        return temp;
+    }
+
 
 }

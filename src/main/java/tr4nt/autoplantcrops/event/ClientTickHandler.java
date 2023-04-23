@@ -19,8 +19,7 @@ import tr4nt.autoplantcrops.config.ConfigFile;
 import java.time.Instant;
 import java.util.Date;
 
-import static tr4nt.autoplantcrops.Utils.Utils.getHit;
-import static tr4nt.autoplantcrops.Utils.Utils.getStackName;
+import static tr4nt.autoplantcrops.Utils.Utils.*;
 
 public class ClientTickHandler implements ClientTickEvents.StartTick {
 
@@ -65,9 +64,21 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                 if (tempres != null)
                 {
                     res = new BlockHitResult(upPos.toCenterPos(),Direction.UP, upPos, tempres.isInsideBlock());
+                    allowPlace = true;
 
                 }
-                allowPlace = true;
+            }
+//            AutoPlantCropsClient.LOGGER.info(getStackName(item));
+            if (ConfigFile.getValue("autoFarmLand").getAsBoolean() && (block instanceof GrassBlock || getBlockName(block).equals("dirt")) && getStackName(item).contains("hoe"))
+            {
+                BlockHitResult tempres = getHit(client);
+                if (tempres != null)
+                {
+                    res = new BlockHitResult(client.player.getSteppingPos().toCenterPos(),Direction.UP, client.player.getSteppingPos(), tempres.isInsideBlock());
+                    allowPlace = true;
+
+                }
+
             }
             if (allowPlace && res != null)
             {

@@ -33,6 +33,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
         BlockState cropBlockState = world.getBlockState(pos);
         Block block = cropBlockState.getBlock();
         MinecraftClient client = MinecraftClient.getInstance();
+
         if ( block instanceof CropBlock || block instanceof StemBlock || block instanceof AttachedStemBlock) {
             CropBlock cropBlock1 = (CropBlock) block;
 
@@ -44,8 +45,9 @@ public class BlockBreakEvent implements AttackBlockCallback {
 
                 if (hit != null)
                 {
-                    switchToItem(client, cropBlock1.getPickStack(world, pos, cropBlockState));
-
+                    int savedSlotValue = client.player.getInventory().selectedSlot;
+                    ItemStack pickStack =  cropBlock1.getPickStack(world, pos, cropBlockState);
+                    switchToItem(client,pickStack);
                     BlockHitResult res = (BlockHitResult) hit;
 //                    if (maybe.getBlockPos().equals(pos.down()))
 //                    {
@@ -66,6 +68,8 @@ public class BlockBreakEvent implements AttackBlockCallback {
 
                     }
                     info.add(tick());
+                    info.add(savedSlotValue);
+                    info.add(pickStack);
                     Ticker.TaskList.add(info);
 
 
