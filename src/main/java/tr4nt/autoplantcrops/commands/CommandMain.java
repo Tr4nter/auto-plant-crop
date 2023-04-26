@@ -11,10 +11,11 @@ import tr4nt.autoplantcrops.config.ConfigFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static tr4nt.autoplantcrops.commands.ListCommands.commands;
+
 public class CommandMain {
     private String commandNameBig;
 
-    public static ArrayList commands = new ArrayList<>();
 
     public CommandMain(String commandName) {
         this.commandNameBig = commandName;

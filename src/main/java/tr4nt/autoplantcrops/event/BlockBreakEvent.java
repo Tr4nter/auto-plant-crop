@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
+
 public class BlockBreakEvent implements AttackBlockCallback {
 
     @Override
@@ -50,30 +51,9 @@ public class BlockBreakEvent implements AttackBlockCallback {
                     switchToItem(client,pickStack);
                     BlockHitResult res = (BlockHitResult) hit;
 //                    if (maybe.getBlockPos().equals(pos.down()))
-//                    {
+//
 
-                    ServerInfo sinf = client.getCurrentServerEntry();
-                    ArrayList info = new ArrayList();
-                    info.add(client);
-                    info.add(res);
-                    if (sinf != null)
-                    {
-
-                        info.add(sinf.ping+(sinf.ping/10)); // extra numbers for a higher chance of success
-
-                    }else
-                    {
-                        long x = 0;
-                        info.add(x);
-
-                    }
-                    info.add(tick());
-                    info.add(savedSlotValue);
-                    info.add(pickStack);
-                    Ticker.TaskList.add(info);
-
-
-
+                    queuePlacement(client, res, savedSlotValue, pickStack, ConfigFile.getValue("plantMultiple").getAsBoolean());
 
 
 

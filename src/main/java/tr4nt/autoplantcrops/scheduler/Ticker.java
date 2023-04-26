@@ -22,16 +22,23 @@ public class Ticker implements ClientTickEvents.StartTick {
         ArrayList removeQueue = new ArrayList();
         TaskList.forEach((list) -> {
                 ArrayList list1 = (ArrayList) list;
+                MinecraftClient clientt = (MinecraftClient) list1.get(0);
+                BlockHitResult res = (BlockHitResult) list1.get(1);
+                long latency = (long) list1.get(2);
+                long tick = (long) list1.get(3);
+                int savedSlotValue = (int) list1.get(4);
+                ItemStack pickStack = (ItemStack) list1.get(5);
+                boolean plantMultiple = (boolean) list1.get(6);
+
 //            AutoPlantCropsClient.LOGGER.info(String.valueOf(Long.compare((tick()-(long) list1.get(2)),(long) list1.get(3))));
-                if (Long.compare((tick()-(long) list1.get(2)),(long) list1.get(3))==1)
+                if (Long.compare((tick()-latency),tick)==1)
                 {
-                    if (getStackName(client.player.getInventory().getStack(client.player.getInventory().selectedSlot)).equals(getStackName((ItemStack) list1.get(5))))
+                    if (getStackName(client.player.getInventory().getStack(client.player.getInventory().selectedSlot)).equals(getStackName(pickStack)))
                     {
-                        PlaceBlock.placeSeed((MinecraftClient) list1.get(0), (BlockHitResult)list1.get(1));
+                        PlaceBlock.placeSeed(clientt, res, plantMultiple);
                         if (ConfigFile.getValue("switchBackToSlot").getAsBoolean())
                         {
-                            AutoPlantCropsClient.LOGGER.info(String.valueOf((int) list1.get(4)));
-                            switchToSlot((MinecraftClient) list1.get(0),(int) list1.get(4));
+                            switchToSlot(client,savedSlotValue);
 
                         }
                     }

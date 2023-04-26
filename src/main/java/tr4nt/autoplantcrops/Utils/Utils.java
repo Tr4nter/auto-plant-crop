@@ -2,17 +2,26 @@ package tr4nt.autoplantcrops.Utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
+import org.joml.Vector3i;
+import org.joml.Vector3ic;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
+import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.sql.Date;
 import java.time.Instant;
+
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Utils {
     public static String getStackName(ItemStack stack) {
@@ -71,7 +80,7 @@ public class Utils {
     public static BlockHitResult getHit(MinecraftClient client)
     {
         HitResult hit = client.crosshairTarget;
-        if (hit != null)
+        if (hit instanceof BlockHitResult)
         {
             return (BlockHitResult) hit;
         } else {
@@ -85,5 +94,57 @@ public class Utils {
         return temp;
     }
 
+    public static long getLatency(MinecraftClient client)
+    {
+        ServerInfo sinf = client.getCurrentServerEntry();
+        if (sinf == null) return 0;
+        return sinf.ping;
+    }
+    public static void queuePlacement(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple)
+    {
+        long latency = getLatency(client);
+        ArrayList info = new ArrayList();
+        info.add(client);
+        info.add(res);
+        if (latency > 0)
+        {
+
+            info.add(latency+(latency/10)); // extra numbers for a higher chance of success
+
+        }else
+        {
+            long x = 0;
+            info.add(x);
+
+        }
+        info.add(tick());
+        info.add(savedSlotValue);
+        info.add(pickStack);
+        info.add(plantMutliple);
+        Ticker.TaskList.add(info);
+    }
+
+    public static boolean isNumber(String val)
+    {
+        try {
+            Integer.parseInt(val);
+            return true;
+
+        } catch(NumberFormatException e)
+        {
+            return false;
+        }
+    }
+
+    public static BlockHitResult compareBlockHit(Vec3d pos, Direction side, BlockPos blockPos, boolean insideBlock, BlockHitResult defaultBHR, Block blockToCompare)
+    {
+        MinecraftClient client = MinecraftClient.getInstance();
+        Block block = client.world.getBlockState(blockPos).getBlock();
+        if (block.equals(blockToCompare))
+        {
+            return new BlockHitResult(pos, side, blockPos, insideBlock);
+        }
+        return defaultBHR;
+    }
 
 }

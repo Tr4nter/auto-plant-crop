@@ -5,24 +5,16 @@ import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
-
-
-import java.time.Instant;
-import java.util.Date;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
 public class ClientTickHandler implements ClientTickEvents.StartTick {
-
+    private static long boneMealTick = tick();
 
     @Override
     public void onStartTick(MinecraftClient client) {
@@ -45,6 +37,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
            HitResult hit = client.crosshairTarget;
 
            boolean allowPlace = false;
+           boolean hoeing = false;
            BlockHitResult res = null;
            if (block instanceof FarmlandBlock && !onCropBlock)
             {
@@ -76,13 +69,28 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                 {
                     res = new BlockHitResult(client.player.getSteppingPos().toCenterPos(),Direction.UP, client.player.getSteppingPos(), tempres.isInsideBlock());
                     allowPlace = true;
-
+                    hoeing = true;
                 }
 
             }
             if (allowPlace && res != null)
             {
-                client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res);
+                if (ConfigFile.getValue("boneMealMultiple").getAsBoolean() || ConfigFile.getValue("farmLandMultiple").getAsBoolean())
+                {
+                    int delay = ConfigFile.getValue("boneMealDelay").getAsInt();
+                    boolean finishedWaitForDelay = delay > 0 ? (tick() - boneMealTick) >= delay : (tick() - boneMealTick) >= getLatency(client);
+                    if (hoeing || finishedWaitForDelay )
+                    {
+                        boolean multiple = hoeing ? ConfigFile.getValue("farmLandMultiple").getAsBoolean() : ConfigFile.getValue("boneMealMultiple").getAsBoolean();
+                        queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), multiple);
+                        if (!hoeing)  boneMealTick = tick();
+                    }
+
+                } else
+                {
+                    client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res);
+
+                }
             }
 
         }
