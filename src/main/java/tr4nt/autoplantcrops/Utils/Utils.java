@@ -2,19 +2,21 @@ package tr4nt.autoplantcrops.Utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.ServerInfo;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
+
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
+import tr4nt.autoplantcrops.mixin.HandledScreenMixin;
+import tr4nt.autoplantcrops.mixin.MouseMixin;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.sql.Date;
@@ -33,37 +35,56 @@ public class Utils {
         return block.getTranslationKey().split("[.]")[2].strip();
     }
 
-    public static void swapSlots(MinecraftClient client, int sourceSlot, int destSlot) {
-        int syncId = client.player.playerScreenHandler.syncId;
 
-        client.interactionManager.clickSlot(syncId, sourceSlot, 0, SlotActionType.PICKUP, client.player);
-        client.interactionManager.clickSlot(syncId, destSlot, 0, SlotActionType.PICKUP, client.player);
+    public static void swapSlots(MinecraftClient client, int sourceSlot, int destSlot) {
+
+        client.interactionManager.clickSlot(client.player.currentScreenHandler.syncId, destSlot, sourceSlot, SlotActionType.SWAP, client.player);
+//        client.interactionManager.clickSlot(syncId, destSlot, 0, SlotActionType.PICKUP, client.player);
 
     }
+    public static Vec3d BlockPosToVector3d(BlockPos pos)
+    {
+        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    }
 
-    public static int switchToItem(MinecraftClient client, ItemStack item) {
-        for (int i = 0; i <= 35; i++) {
+    public static void switchToItem(MinecraftClient client, ItemStack item) {
+
+        for (int i = 0; i < 36 ; i++) {
             ItemStack stack = client.player.getInventory().getStack(i);
             if (getStackName(stack).equals(getStackName(item))) {
                 if (i <= 8) {
                     client.player.getInventory().selectedSlot = i;
+                    return;
                 }
-//                } else
-//                {
-//                    int emptySlot = client.player.getInventory().getEmptySlot();
-//                    if (emptySlot == -1 )
-//                    {
-//                        emptySlot = 0;
-//                    }
-//
-//                    swapSlots(client, i , emptySlot);
-//
-//                }
-                return i;
-            }
+                 else {
+                    int emptySlot = client.player.getInventory().getEmptySlot();
+                    if (emptySlot == -1) {
+                        emptySlot = 0;
+                    }
+                    if (emptySlot > 8) return;
+                    if (client.isOnThread()) {
+                        InventoryScreen newInven = new InventoryScreen(client.player);
+                        client.setScreenAndRender(newInven);
+                        client.interactionManager.clickSlot(0,i,0, SlotActionType.QUICK_MOVE, client.player);
+
+                        client.player.closeHandledScreen();
+                        client.player.getInventory().selectedSlot = emptySlot;
+
+                        return;
+                    }
+
+
+                }
+
+
+
+
+
+                }
+
         }
-        return -1;
     }
+
 
     public static void switchToSlot(MinecraftClient client, int slot)
     {

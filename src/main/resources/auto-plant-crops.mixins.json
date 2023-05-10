@@ -1,11 +1,13 @@
 {
-	"required": true,
-	"package": "tr4nt.autoplantcrops.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "tr4nt.autoplantcrops.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MouseMixin",
+    "HandledScreenMixin"
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
