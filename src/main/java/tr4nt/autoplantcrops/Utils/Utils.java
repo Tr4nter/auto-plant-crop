@@ -2,11 +2,9 @@ package tr4nt.autoplantcrops.Utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -14,9 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import tr4nt.autoplantcrops.AutoPlantCropsClient;
-import tr4nt.autoplantcrops.mixin.HandledScreenMixin;
-import tr4nt.autoplantcrops.mixin.MouseMixin;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.sql.Date;
