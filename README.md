@@ -4,6 +4,6 @@ This mod requires [Fabric](https://fabricmc.net/)
 
 
 
-[Curseforge](https://www.curseforge.com/minecraft/mc-mods/auto-plant-crops)
+[modrinth](https://modrinth.com/mod/auto-plant-crops)
 
 
