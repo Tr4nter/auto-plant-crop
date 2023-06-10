@@ -1,9 +1,8 @@
 package tr4nt.autoplantcrops.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+
 import com.mojang.brigadier.context.CommandContext;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.text.Text;
@@ -29,7 +28,7 @@ public class SetNumberCommand {
 
     public void register(CommandDispatcher<FabricClientCommandSource> fabricClientCommandSourceCommandDispatcher, CommandRegistryAccess commandRegistryAccess) {
         {
-            fabricClientCommandSourceCommandDispatcher.register(literal(this.commandNameBig).then(argument("delayInTicks", integer()).executes(ctx -> run(ctx, getInteger(ctx, "delayInTicks")))));
+                fabricClientCommandSourceCommandDispatcher.register(literal(this.commandNameBig).then(argument("delayInTicks", integer()).executes(ctx -> run(ctx, getInteger(ctx, "delayInTicks")))));
 
         }
 

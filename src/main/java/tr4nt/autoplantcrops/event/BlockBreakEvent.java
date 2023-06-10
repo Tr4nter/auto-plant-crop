@@ -7,6 +7,7 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
+import tr4nt.autoplantcrops.mixin.CropBlockMixin;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.util.ArrayList;
@@ -37,8 +39,8 @@ public class BlockBreakEvent implements AttackBlockCallback {
 
         if ( block instanceof CropBlock || block instanceof StemBlock || block instanceof AttachedStemBlock) {
             CropBlock cropBlock1 = (CropBlock) block;
-
-            int age = cropBlockState.get(cropBlock1.getAgeProperty());
+            IntProperty ageprop = ((CropBlockMixin) cropBlock1).invokeGetAgeProperty();
+            int age = cropBlockState.get(ageprop);
             if (ConfigFile.getValue("plantDespiteAge").getAsBoolean() || age == cropBlock1.getMaxAge()) {
 //                            client.player.();
 
