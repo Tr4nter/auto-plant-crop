@@ -47,6 +47,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         list.add(newOption("switchBackToSlot", "true"));
         list.add(newOption("farmLandMultiple", "false"));
         list.add(newOption("boneMealMultiple", "false"));
+        list.add(newOption("autoplantcrops", "true"));
         list.add(newOption("boneMealDelay", "100"));
 
 

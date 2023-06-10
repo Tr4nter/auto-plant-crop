@@ -33,6 +33,10 @@ public class BlockBreakEvent implements AttackBlockCallback {
 
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
+
+         if (!ConfigFile.getValue("autoplantcrops").getAsBoolean())return ActionResult.PASS;
+
+
         BlockState cropBlockState = world.getBlockState(pos);
         Block block = cropBlockState.getBlock();
         MinecraftClient client = MinecraftClient.getInstance();

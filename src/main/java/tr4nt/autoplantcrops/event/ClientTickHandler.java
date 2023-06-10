@@ -8,6 +8,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +27,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
     public void onStartTick(MinecraftClient client) {
 
         if (client.player != null) {
+            if (!ConfigFile.getValue("autoplantcrops").getAsBoolean())return ;
 
             BlockState state = client.player.getSteppingBlockState();
            Block block = state.getBlock();
