@@ -1,4 +1,4 @@
-# auto-plant-crop-1.19.4
+# auto-plant-crop-1.19+
 
 This mod requires [Fabric](https://fabricmc.net/)
 
