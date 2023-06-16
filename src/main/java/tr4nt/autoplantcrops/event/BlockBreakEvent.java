@@ -41,7 +41,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
         Block block = cropBlockState.getBlock();
         MinecraftClient client = MinecraftClient.getInstance();
 
-        if ( block instanceof CropBlock || block instanceof StemBlock || block instanceof AttachedStemBlock) {
+        if ( block instanceof CropBlock) {
             CropBlock cropBlock1 = (CropBlock) block;
             IntProperty ageprop = ((CropBlockMixin) cropBlock1).invokeGetAgeProperty();
             int age = cropBlockState.get(ageprop);

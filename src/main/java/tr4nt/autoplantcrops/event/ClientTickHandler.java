@@ -41,7 +41,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
            BlockState aboveBlockState = client.world.getBlockState(upPos);
            Block blockAbove = aboveBlockState.getBlock();
 
-           boolean onCropBlock = (blockAbove instanceof CropBlock || blockAbove instanceof StemBlock || blockAbove instanceof AttachedStemBlock);
+           boolean onCropBlock = (blockAbove instanceof CropBlock || blockAbove instanceof StemBlock);
 
            HitResult hit = client.crosshairTarget;
 
@@ -50,7 +50,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
            BlockHitResult res = null;
            if (block instanceof FarmlandBlock && !onCropBlock)
             {
-                if ((ConfigFile.getValue("plantOnWalkOver").getAsBoolean() && itemBlock instanceof CropBlock || itemBlock instanceof StemBlock || itemBlock instanceof AttachedStemBlock) )
+                if ((ConfigFile.getValue("plantOnWalkOver").getAsBoolean() && itemBlock instanceof CropBlock) )
                 {
                     BlockHitResult tempres = getHit(client);
                     if (tempres != null)
