@@ -41,7 +41,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
            BlockState aboveBlockState = client.world.getBlockState(upPos);
            Block blockAbove = aboveBlockState.getBlock();
 
-           boolean onCropBlock = (blockAbove instanceof CropBlock || blockAbove instanceof StemBlock);
+           boolean onCropBlock = (blockAbove instanceof CropBlock);
 
            HitResult hit = client.crosshairTarget;
 
