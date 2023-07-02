@@ -98,8 +98,6 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                 } else
                 {
                     queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), ConfigFile.getValue("plantMultiple").getAsBoolean());
-
-
                 }
             }
 

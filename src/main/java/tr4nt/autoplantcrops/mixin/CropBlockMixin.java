@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(CropBlock.class)
 public interface CropBlockMixin {
+
     @Invoker("getAgeProperty")
     public IntProperty invokeGetAgeProperty();
 }
