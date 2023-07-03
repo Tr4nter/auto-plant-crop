@@ -27,6 +27,8 @@ public class ClientPlayerInteractionMixin2
     @Inject(method="breakBlock", at = @At("TAIL"))
     public void attackBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir)
     {
+        if (!ConfigFile.getValue("autoplantcrops").getAsBoolean())return ;
+
         MinecraftClient client = MinecraftClient.getInstance();
         if (!(client.world.getBlockState(BlockBreakEvent.taggedBlockPos).getBlock() == Blocks.AIR))
         {
