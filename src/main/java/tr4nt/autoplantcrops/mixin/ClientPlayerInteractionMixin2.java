@@ -18,6 +18,7 @@ import tr4nt.autoplantcrops.AutoPlantCrops;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
+import tr4nt.autoplantcrops.event.KeyInputHandler;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
@@ -27,7 +28,7 @@ public class ClientPlayerInteractionMixin2
     @Inject(method="breakBlock", at = @At("TAIL"))
     public void attackBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir)
     {
-        if (!ConfigFile.getValue("autoplantcrops").getAsBoolean())return ;
+        if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
 
         MinecraftClient client = MinecraftClient.getInstance();
         if (!(client.world.getBlockState(BlockBreakEvent.taggedBlockPos).getBlock() == Blocks.AIR))

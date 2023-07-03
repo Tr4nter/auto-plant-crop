@@ -27,7 +27,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
     public void onStartTick(MinecraftClient client) {
 
         if (client.player != null) {
-            if (!ConfigFile.getValue("autoplantcrops").getAsBoolean())return ;
+            if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
 
             BlockState state = client.player.getSteppingBlockState();
            Block block = state.getBlock();
@@ -47,6 +47,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
 
            boolean allowPlace = false;
            boolean hoeing = false;
+           boolean bonemealing = false;
            BlockHitResult res = null;
            if (block instanceof FarmlandBlock && !onCropBlock)
             {
@@ -67,6 +68,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                 {
                     res = new BlockHitResult(BlockPosToVector3d(upPos),Direction.UP, upPos, tempres.isInsideBlock());
                     allowPlace = true;
+                    bonemealing = true;
 
                 }
             }
@@ -84,7 +86,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
             }
             if (allowPlace && res != null)
             {
-                if (ConfigFile.getValue("boneMealMultiple").getAsBoolean() || ConfigFile.getValue("farmLandMultiple").getAsBoolean())
+                if (bonemealing || hoeing)
                 {
                     int delay = ConfigFile.getValue("boneMealDelay").getAsInt();
                     boolean finishedWaitForDelay = delay > 0 ? (tick() - boneMealTick) >= delay : (tick() - boneMealTick) >= getLatency(client);

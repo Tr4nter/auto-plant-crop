@@ -14,6 +14,7 @@ import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.ClientTickHandler;
 
+import tr4nt.autoplantcrops.event.KeyInputHandler;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         ClientTickEvents.START_CLIENT_TICK.register(ticka);
 
         AttackBlockCallback.EVENT.register(new BlockBreakEvent());
+        KeyInputHandler.register();
     }
 
 
