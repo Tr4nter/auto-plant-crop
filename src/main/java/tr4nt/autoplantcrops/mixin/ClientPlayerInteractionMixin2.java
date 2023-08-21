@@ -3,6 +3,8 @@ package tr4nt.autoplantcrops.mixin;
 import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.client.render.DimensionEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.property.IntProperty;
@@ -19,6 +21,7 @@ import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.KeyInputHandler;
+import tr4nt.autoplantcrops.event.PlaceBlock;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
@@ -40,7 +43,7 @@ public class ClientPlayerInteractionMixin2
         BlockState cropBlockState = BlockBreakEvent.taggedBlockState;
         Block block = cropBlockState.getBlock();
         AutoPlantCrops.LOGGER.info(cropBlockState.toString());
-        if ( block instanceof CropBlock || block instanceof CocoaBlock) {
+        if ( block instanceof CropBlock || block instanceof CocoaBlock || block instanceof NetherWartBlock) {
             IntProperty ageprop = getAge(block);
             int age = cropBlockState.get(ageprop);
             int max_age = getMaxAge(block);
@@ -51,7 +54,17 @@ public class ClientPlayerInteractionMixin2
 
                 if (hit != null) {
                     int savedSlotValue = client.player.getInventory().selectedSlot;
-                    ItemStack pickStack = block instanceof CropBlock ? ((CropBlock) block).getPickStack(client.world, pos, cropBlockState): new ItemStack(Items.COCOA_BEANS);
+                    ItemStack pickStack = null;
+                    if (block instanceof CropBlock)
+                    {
+                        pickStack = ((CropBlock) block).getPickStack(client.world, pos, cropBlockState);
+                    } else if (block instanceof CocoaBlock)
+                    {
+                        pickStack = new ItemStack(Items.COCOA_BEANS);
+                    } else if (block instanceof NetherWartBlock)
+                    {
+                        pickStack = new ItemStack(Items.NETHER_WART);
+                    }
                     switchToItem(client, pickStack);
                     BlockHitResult res = (BlockHitResult) hit;
 

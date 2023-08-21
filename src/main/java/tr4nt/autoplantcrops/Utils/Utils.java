@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
@@ -19,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import tr4nt.autoplantcrops.mixin.CocoaBlockMixin;
 import tr4nt.autoplantcrops.mixin.CropBlockMixin;
+import tr4nt.autoplantcrops.mixin.NetherWartBlockMixin;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.sql.Date;
@@ -156,11 +158,35 @@ public class Utils {
 
     public static IntProperty getAge(Block block)
     {
-        return block instanceof CropBlock ? ((CropBlockMixin) block).invokeGetAgeProperty() : ((CocoaBlockMixin) block).getAGE();
+        if (block instanceof CropBlock)
+        {
+            return ((CropBlockMixin) block).invokeGetAgeProperty();
+        } else if (block instanceof CocoaBlock)
+        {
+            return ((CocoaBlockMixin) block).getAGE();
+        } else if (block instanceof NetherWartBlock)
+        {
+            return ((NetherWartBlockMixin) block).getAGE();
+        }
+
+        return null;
     }
 
     public static int getMaxAge(Block block)
     {
-        return block instanceof CropBlock ? ((CropBlock) block).getMaxAge() : ((CocoaBlockMixin) block).getMaxAge();
+        if (block instanceof CropBlock)
+        {
+            return ((CropBlock) block).getMaxAge();
+        } else if (block instanceof CocoaBlock)
+        {
+            return ((CocoaBlockMixin) block).getMaxAge();
+        } else if (block instanceof NetherWartBlock)
+        {
+            return ((NetherWartBlockMixin) block).getMaxAge();
+        }
+        return -1;
     }
+
+
+
 }

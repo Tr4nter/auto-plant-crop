@@ -5,6 +5,7 @@
   "mixins": [
     "CocoaBlockMixin",
     "CropBlockMixin",
+    "NetherWartBlockMixin",
     "ClientPlayerInteractionMixin2"
   ],
   "injectors": {
