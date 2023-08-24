@@ -2,6 +2,7 @@ package tr4nt.autoplantcrops.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
@@ -17,7 +18,7 @@ public class PlaceBlock {
         BlockHitResult tempThe = new BlockHitResult(hit.getPos(), Direction.UP, hit.getBlockPos(), hit.isInsideBlock());
         Block block = client.world.getBlockState(tempThe.getBlockPos()).getBlock();
 
-        client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),tempThe);
+        client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,tempThe);
 
         if (plantMultiple) {
             // sorry not sorry
@@ -31,14 +32,14 @@ public class PlaceBlock {
             BlockHitResult res8 =  compareBlockHit(res7.getPos().subtract(2,0,0), Direction.UP, res7.getBlockPos().subtract(new Vec3i(2,0,0)), res7.isInsideBlock(), tempThe, block);
 
 
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res1);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res2);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res3);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res4);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res5);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res6);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res7);
-            client.interactionManager.interactBlock(client.player,client.player.getActiveHand(),res8);
+            client.interactionManager.interactBlock(client.player, Hand.MAIN_HAND,res1);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res2);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res3);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res4);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res5);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res6);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res7);
+            client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,res8);
 
 
 
