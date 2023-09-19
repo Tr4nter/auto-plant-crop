@@ -14,6 +14,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import tr4nt.autoplantcrops.AutoPlantCrops;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 
@@ -31,7 +32,6 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
 
             BlockState state = client.player.getSteppingBlockState();
            Block block = state.getBlock();
-
            PlayerInventory inv = client.player.getInventory();
            ItemStack item = inv.getStack(inv.selectedSlot);
            Block itemBlock = Block.getBlockFromItem(item.getItem());
@@ -49,9 +49,9 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
            boolean hoeing = false;
            boolean bonemealing = false;
            BlockHitResult res = null;
-           if (block instanceof FarmlandBlock && !onCropBlock)
+           if ((block instanceof FarmlandBlock || block instanceof SoulSandBlock) && !onCropBlock)
             {
-                if ((ConfigFile.getValue("plantOnWalkOver").getAsBoolean() && itemBlock instanceof CropBlock) )
+                if ((ConfigFile.getValue("plantOnWalkOver").getAsBoolean() && (itemBlock instanceof CropBlock || itemBlock instanceof NetherWartBlock)))
                 {
                     BlockHitResult tempres = getHit(client);
                     if (tempres != null)

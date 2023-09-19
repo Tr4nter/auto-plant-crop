@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
+import tr4nt.autoplantcrops.event.KeyInputHandler;
 import tr4nt.autoplantcrops.event.PlaceBlock;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Ticker implements ClientTickEvents.StartTick {
 
     @Override
     public void onStartTick(MinecraftClient client) {
+//        if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn) on = false ;
         ArrayList removeQueue = new ArrayList();
         TaskList.forEach((list) -> {
                 ArrayList list1 = (ArrayList) list;
@@ -33,6 +35,7 @@ public class Ticker implements ClientTickEvents.StartTick {
 //            AutoPlantCropsClient.LOGGER.info(String.valueOf(Long.compare((tick()-(long) list1.get(2)),(long) list1.get(3))));
                 if (Long.compare((tick()-latency),tick)==1)
                 {
+                    switchToItem(client, pickStack);
                     if (getStackName(client.player.getInventory().getStack(client.player.getInventory().selectedSlot)).equals(getStackName(pickStack)))
                     {
                         PlaceBlock.placeSeed(clientt, res, plantMultiple);

@@ -13,8 +13,6 @@ group = project.maven_group
 
 repositories {
 
-
-
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -22,7 +20,6 @@ repositories {
 	// for more information about repositories.
 
 }
-
 loom {
     runs {
         // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"

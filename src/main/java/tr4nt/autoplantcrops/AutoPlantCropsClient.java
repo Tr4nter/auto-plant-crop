@@ -4,7 +4,6 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tr4nt.autoplantcrops.commands.CommandMain;
@@ -35,9 +34,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
         ConfigFile.register("autofarmcropsconf");
-
         ArrayList list = new ArrayList();
 
         list.add(newOption("plantOnWalkOver", "true"));
@@ -49,6 +46,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         list.add(newOption("farmLandMultiple", "false"));
         list.add(newOption("boneMealMultiple", "false"));
         list.add(newOption("autoplantcrops", "true"));
+        list.add(newOption("cancelBreakUnlessAged", "false"));
         list.add(newOption("boneMealDelay", "100"));
 
 
@@ -77,6 +75,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
 
         AttackBlockCallback.EVENT.register(new BlockBreakEvent());
         KeyInputHandler.register();
+
     }
 
 

@@ -30,6 +30,7 @@ import tr4nt.autoplantcrops.mixin.CocoaBlockMixin;
 import tr4nt.autoplantcrops.mixin.CropBlockMixin;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -43,8 +44,20 @@ public class BlockBreakEvent implements AttackBlockCallback {
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
 
+        if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return  ActionResult.PASS;
         taggedBlockPos = pos;
         taggedBlockState = world.getBlockState(pos);
+        BlockState cropBlockState = taggedBlockState;
+        Block block = cropBlockState.getBlock();
+        if ( block instanceof CropBlock || block instanceof CocoaBlock || block instanceof NetherWartBlock) {
+            IntProperty ageprop = getAge(block);
+            int age = cropBlockState.get(ageprop);
+            int max_age = getMaxAge(block);
+            if (ConfigFile.getValue("cancelBreakUnlessAged").getAsBoolean() && !ConfigFile.getValue("plantDespiteAge").getAsBoolean() && age<max_age)
+            {
+               return ActionResult.FAIL;
+            }
+        }
         return ActionResult.PASS;
 
     }
