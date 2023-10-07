@@ -17,8 +17,9 @@ public class PlaceBlock {
 
         if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
         BlockHitResult tempThe = new BlockHitResult(hit.getPos(), Direction.UP, hit.getBlockPos(), hit.isInsideBlock());
+        if (client.world == null) return;
         Block block = client.world.getBlockState(tempThe.getBlockPos()).getBlock();
-
+        if (client.interactionManager == null) return;
         client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,tempThe);
 
         if (plantMultiple) {

@@ -32,7 +32,7 @@ public class ListCommands  {
         {
             String key = (String) i;
             String val = String.valueOf(ConfigFile.getValue(key));
-            String colourText = isNumber(val) ? "\2473"+val : val.equals("true")? "\2472"+val : "\2474"+val;
+            String colourText = isNumber(val) ? "\2473"+val+"ms" : val.equals("true")? "\2472"+val : "\2474"+val;
             buff+="\247f"+key+": "+colourText+"\n";
         });
         fabricClientCommandSourceCommandContext.getSource().sendFeedback(Text.literal(buff));

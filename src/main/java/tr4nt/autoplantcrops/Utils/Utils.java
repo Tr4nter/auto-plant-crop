@@ -5,9 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -15,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+
+import tr4nt.autoplantcrops.AutoPlantCropsClient;
+import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.mixin.CocoaBlockMixin;
 import tr4nt.autoplantcrops.mixin.CropBlockMixin;
 import tr4nt.autoplantcrops.mixin.NetherWartBlockMixin;
@@ -118,16 +116,18 @@ public class Utils {
 
     public static void queuePlacement(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple) {
         long latency = getLatency(client);
+        int delay = ConfigFile.getValue("autoplantcropsDelay").getAsInt();
+        AutoPlantCropsClient.LOGGER.info(String.valueOf(delay));
         ArrayList info = new ArrayList();
         info.add(client);
         info.add(res);
         if (latency > 0) {
 
-            info.add(latency + (latency / 10)); // extra numbers for a higher chance of success
+            info.add((latency + delay)); // extra numbers for a higher chance of success
 
         } else {
             long x = 0;
-            info.add(x);
+            info.add(x+delay);
 
         }
         info.add(tick());

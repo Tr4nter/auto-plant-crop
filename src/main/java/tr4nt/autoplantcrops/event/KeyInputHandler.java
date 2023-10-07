@@ -5,9 +5,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
-import tr4nt.autoplantcrops.config.ConfigFile;
-
-import java.util.HashMap;
 
 public class KeyInputHandler {
     public static boolean isOn = true;
@@ -19,17 +16,7 @@ public class KeyInputHandler {
     public static void registerKeyInput()
     {
         ClientTickEvents.END_CLIENT_TICK.register(client->
-        {
-            if(disableModKey.isPressed())
-            {
-                isOn = false;
-
-            }
-            else
-            {
-                isOn = true;
-            }
-        });
+                isOn = !disableModKey.isPressed());
     }
 
     public static void register()
