@@ -31,27 +31,26 @@ public class AutoPlantCropsClient implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("auto-plant-crops");
 
 
-
+    public static final ArrayList commandList = new ArrayList();
     @Override
     public void onInitializeClient() {
         ConfigFile.register("autofarmcropsconf");
-        ArrayList list = new ArrayList();
 
-        list.add(newOption("plantOnWalkOver", "true"));
-        list.add(newOption("plantDespiteAge", "true"));
-        list.add(newOption("autoBoneMeal", "true"));
-        list.add(newOption("plantMultiple", "false"));
-        list.add(newOption("autoFarmLand", "true"));
-        list.add(newOption("switchBackToSlot", "true"));
-        list.add(newOption("farmLandMultiple", "false"));
-        list.add(newOption("boneMealMultiple", "false"));
-        list.add(newOption("autoplantcrops", "true"));
-        list.add(newOption("cancelBreakUnlessAged", "false"));
-        list.add(newOption("autoplantcropsDelay", "100"));
-
+        commandList.add(newOption("plantOnWalkOver", "true"));
+        commandList.add(newOption("plantDespiteAge", "true"));
+        commandList.add(newOption("autoBoneMeal", "true"));
+        commandList.add(newOption("plantMultiple", "false"));
+        commandList.add(newOption("autoFarmLand", "true"));
+        commandList.add(newOption("switchBackToSlot", "true"));
+        commandList.add(newOption("farmLandMultiple", "false"));
+        commandList.add(newOption("boneMealMultiple", "false"));
+        commandList.add(newOption("autoplantcrops", "true"));
+        commandList.add(newOption("cancelBreakUnlessAged", "false"));
+        commandList.add(newOption("autoplantcropsDelay", "100"));
 
 
-        list.forEach((i)->
+
+        commandList.forEach((i)->
         {
             Map<String, String> iz = (Map<String,String>) i;
             ConfigFile.addValue(iz, false);

@@ -26,6 +26,7 @@ import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
     public static String getStackName(ItemStack stack) {
@@ -117,17 +118,16 @@ public class Utils {
     public static void queuePlacement(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple) {
         long latency = getLatency(client);
         int delay = ConfigFile.getValue("autoplantcropsDelay").getAsInt();
-        AutoPlantCropsClient.LOGGER.info(String.valueOf(delay));
         ArrayList info = new ArrayList();
         info.add(client);
         info.add(res);
+        int taskSize = Ticker.TaskList.size()+1;
         if (latency > 0) {
-
-            info.add((latency + delay)); // extra numbers for a higher chance of success
+            info.add((latency + (delay*taskSize)));
 
         } else {
             long x = 0;
-            info.add(x+delay);
+            info.add(x+ (delay*taskSize));
 
         }
         info.add(tick());

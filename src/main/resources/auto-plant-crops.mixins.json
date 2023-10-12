@@ -3,10 +3,10 @@
   "package": "tr4nt.autoplantcrops.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ClientPlayerInteractionMixin2",
     "CocoaBlockMixin",
     "CropBlockMixin",
-    "NetherWartBlockMixin",
-    "ClientPlayerInteractionMixin2"
+    "NetherWartBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

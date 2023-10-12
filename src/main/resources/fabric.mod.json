@@ -8,16 +8,14 @@
 		"Tr4nt"
 	],
 	"contact": {
-		"homepage": "None/",
-		"sources": "https://github.com/Tr4nter/auto-plant-crop-1.19.4"
+		"homepage": "https://modrinth.com/mod/auto-plant-crops",
+		"sources": "https://github.com/Tr4nter/auto-plant-crop",
+		"issues": "https://github.com/Tr4nter/auto-plant-crop/issues"
 	},
 	"license": "MIT",
-	"icon": "assets/auto-plant-crops/icon.png",
-	"environment": "*",
+	"icon": "assets/auto-plant-crops/iconjif.gif",
+	"environment": "client",
 	"entrypoints": {
-		"main": [
-          "tr4nt.autoplantcrops.AutoPlantCrops"
-		],
 		"fabric-datagen": [
 			"tr4nt.autoplantcrops.ExampleModDataGenerator"
 		],
@@ -39,4 +37,5 @@
 	"suggests": {
 		"another-mod": "*"
 	}
+
 }
