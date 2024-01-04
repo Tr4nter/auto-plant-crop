@@ -91,15 +91,15 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
 
                     if ((hoeing && finishedWaitForHoeingDelay) || (!hoeing && finishedWaitForDelay) )
                     {
-                        boolean multiple = hoeing ? ConfigFile.getValue("farmLandMultiple").getAsBoolean() : ConfigFile.getValue("boneMealMultiple").getAsBoolean();
-                        queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), multiple);
+//                        boolean multiple = hoeing ? ConfigFile.getValue("farmLandMultiple").getAsBoolean() : ConfigFile.getValue("boneMealMultiple").getAsBoolean();
+                        queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), false);
                         if (!hoeing)  boneMealTick = tick();
                         if (hoeing) hoeingTick = tick();
                     }
 
                 } else
                 {
-                    queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), ConfigFile.getValue("plantMultiple").getAsBoolean());
+                    queuePlacement(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), false);
                 }
             }
 

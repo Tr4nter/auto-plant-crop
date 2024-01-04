@@ -7,15 +7,16 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.text.Text;
 import tr4nt.autoplantcrops.config.ConfigFile;
-
+import tr4nt.autoplantcrops.commands.CommandUtils.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static tr4nt.autoplantcrops.commands.CommandUtils.flipCommand;
 import static tr4nt.autoplantcrops.commands.ListCommands.commands;
 
 public class CommandMain {
     private String commandNameBig;
-
+    public ArrayList<String> commandsToFlip = new ArrayList<String>();
 
     public CommandMain(String commandName) {
         this.commandNameBig = commandName;
@@ -33,12 +34,14 @@ public class CommandMain {
 
     private int run(CommandContext<FabricClientCommandSource> fabricClientCommandSourceCommandContext)
     {
-        boolean reversed = !ConfigFile.getValue(this.commandNameBig).getAsBoolean();
-        HashMap<String, String> map = new HashMap<>();
-        map.put(this.commandNameBig, String.valueOf(reversed));
+        flipCommand(fabricClientCommandSourceCommandContext, this.commandNameBig);
+        commandsToFlip.forEach((String name) ->
+        {
+            boolean commandStatus = ConfigFile.getValue(name).getAsBoolean();
+            if (!commandStatus) return;
+            flipCommand(fabricClientCommandSourceCommandContext, name);
 
-        ConfigFile.addValue(map, true);
-        fabricClientCommandSourceCommandContext.getSource().sendFeedback(Text.literal(this.commandNameBig + " has been switched to " + String.valueOf(reversed)));
+        });
         return 1;
     }
 

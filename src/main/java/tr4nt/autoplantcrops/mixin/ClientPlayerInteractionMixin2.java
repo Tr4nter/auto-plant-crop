@@ -67,7 +67,7 @@ public class ClientPlayerInteractionMixin2
 
                 BlockHitResult res = new BlockHitResult(BlockPosToVector3d(pos), Direction.UP,pos, false);
 
-                queuePlacement(client, res, savedSlotValue, pickStack, ConfigFile.getValue("plantMultiple").getAsBoolean());
+                queuePlacement(client, res, savedSlotValue, pickStack, false);
 
             }
 

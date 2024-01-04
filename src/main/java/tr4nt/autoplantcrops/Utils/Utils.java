@@ -182,7 +182,7 @@ public class Utils {
             return ((CocoaBlockMixin) block).getMaxAge();
         } else if (block instanceof NetherWartBlock)
         {
-            return ((NetherWartBlockMixin) block).getMaxAge();
+            return 3;
         }
         return -1;
     }

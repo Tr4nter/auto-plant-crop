@@ -45,7 +45,7 @@ public class SetNumberCommand {
             String feedBack;
             if (value > 0)
             {
-                feedBack = "Successfully set delay to "+String.valueOf(value)+"ms";
+                feedBack = "Successfully set delay to "+"\2473"+String.valueOf(value)+"ms";
             } else
             {
                 feedBack = "Successfully set delay to depend on latency";

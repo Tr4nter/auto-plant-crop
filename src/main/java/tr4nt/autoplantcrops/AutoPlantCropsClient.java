@@ -18,6 +18,7 @@ import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import static tr4nt.autoplantcrops.Utils.Utils.isNumber;
 import static tr4nt.autoplantcrops.Utils.Utils.newOption;
@@ -37,13 +38,14 @@ public class AutoPlantCropsClient implements ClientModInitializer {
         ConfigFile.register("autofarmcropsconf");
 
         commandList.add(newOption("plantOnWalkOver", "true"));
+
         commandList.add(newOption("plantDespiteAge", "true"));
         commandList.add(newOption("autoBoneMeal", "true"));
-        commandList.add(newOption("plantMultiple", "false"));
+//        commandList.add(newOption("plantMultiple", "false"));
         commandList.add(newOption("autoFarmLand", "true"));
         commandList.add(newOption("switchBackToSlot", "true"));
-        commandList.add(newOption("farmLandMultiple", "false"));
-        commandList.add(newOption("boneMealMultiple", "false"));
+//        commandList.add(newOption("farmLandMultiple", "false"));
+//        commandList.add(newOption("boneMealMultiple", "false"));
         commandList.add(newOption("autoplantcrops", "true"));
         commandList.add(newOption("cancelBreakUnlessAged", "false"));
         commandList.add(newOption("autoplantcropsDelay", "100"));
@@ -56,9 +58,16 @@ public class AutoPlantCropsClient implements ClientModInitializer {
             ConfigFile.addValue(iz, false);
             String name = (String) iz.keySet().toArray()[0];
             String value = (String) iz.values().toArray()[0];
+
             if (value.equals("true") || value.equals("false"))
             {
                 CommandMain com = new CommandMain(name);
+                if (name.equals("cancelBreakUnlessAged"))
+                {
+                    com.commandsToFlip.add("plantDespiteAge");
+                } else if (name.equals("plantDespiteAge")) {
+                    com.commandsToFlip.add("cancelBreakUnlessAged");
+                }
                 ClientCommandRegistrationCallback.EVENT.register(com::register);
             } else if (isNumber(value)) {
                 ClientCommandRegistrationCallback.EVENT.register(new SetNumberCommand(name)::register);
