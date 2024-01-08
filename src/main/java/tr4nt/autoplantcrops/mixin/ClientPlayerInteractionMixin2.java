@@ -6,12 +6,18 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -21,11 +27,15 @@ import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.KeyInputHandler;
 
+import java.rmi.registry.Registry;
+
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionMixin2
 {
+    @Shadow @Final private static Logger LOGGER;
+
     @Inject(method="breakBlock", at = @At("TAIL"))
     public void attackBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir)
     {
@@ -33,7 +43,11 @@ public class ClientPlayerInteractionMixin2
         if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
 
         MinecraftClient client = MinecraftClient.getInstance();
-        if (!(client.world.getBlockState(BlockBreakEvent.taggedBlockPos).getBlock() == Blocks.AIR))
+        RegistryKey<World> currentClientWorld = client.world.getRegistryKey();
+        ServerWorld serverWorld = client.getServer().getWorld(currentClientWorld);
+        BlockState brokenBlockState = serverWorld.getBlockState(BlockBreakEvent.taggedBlockPos);
+//        LOGGER.info(String.valueOf(brokenBlockState));
+        if ((brokenBlockState.getBlock() == Blocks.AIR))
         {
 
             return ;
