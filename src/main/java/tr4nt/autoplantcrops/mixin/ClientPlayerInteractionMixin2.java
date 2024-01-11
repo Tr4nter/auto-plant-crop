@@ -11,7 +11,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -26,6 +29,10 @@ import static tr4nt.autoplantcrops.Utils.Utils.*;
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionMixin2
 {
+    @Shadow @Final private static Logger LOGGER;
+
+    @Shadow @Final private MinecraftClient client;
+
     @Inject(method="breakBlock", at = @At("TAIL"))
     public void attackBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir)
     {
@@ -33,13 +40,15 @@ public class ClientPlayerInteractionMixin2
         if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
 
         MinecraftClient client = MinecraftClient.getInstance();
-        if (!(client.world.getBlockState(BlockBreakEvent.taggedBlockPos).getBlock() == Blocks.AIR))
+        if (client.world == null) return;
+        if (!((client.world.getBlockState(BlockBreakEvent.taggedBlockPos).getBlock() == Blocks.AIR)))
         {
 
             return ;
         }
 
         BlockState cropBlockState = BlockBreakEvent.taggedBlockState;
+        if (cropBlockState == null) return;
         Block block = cropBlockState.getBlock();
         if ( block instanceof CropBlock || block instanceof CocoaBlock || block instanceof NetherWartBlock) {
             IntProperty ageprop = getAge(block);
@@ -53,9 +62,10 @@ public class ClientPlayerInteractionMixin2
 //                if (hit != null) {
                 int savedSlotValue = client.player.getInventory().selectedSlot;
                 ItemStack pickStack = null;
-                if (block instanceof CropBlock)
+                if (block.getClass() == CropBlock.class)
                 {
-                    pickStack = ((CropBlock) block).getPickStack(client.world, pos, cropBlockState);
+
+                    pickStack = block.getPickStack(client.world, pos, cropBlockState);
                 } else if (block instanceof CocoaBlock)
                 {
                     pickStack = new ItemStack(Items.COCOA_BEANS);
