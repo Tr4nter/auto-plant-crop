@@ -64,8 +64,7 @@ public class ClientPlayerInteractionMixin2
                 ItemStack pickStack = null;
                 if (block.getClass() == CropBlock.class)
                 {
-
-                    pickStack = block.getPickStack(client.world, pos, cropBlockState);
+                    pickStack = new ItemStack(((CropBlockMixin) block).invokeGetSeedsitem());
                 } else if (block instanceof CocoaBlock)
                 {
                     pickStack = new ItemStack(Items.COCOA_BEANS);

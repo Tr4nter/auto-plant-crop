@@ -3,6 +3,7 @@ package tr4nt.autoplantcrops.mixin;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.PlantBlock;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -13,4 +14,7 @@ public interface CropBlockMixin {
 
     @Invoker("getAgeProperty")
     public IntProperty invokeGetAgeProperty();
+
+    @Invoker("getSeedsItem")
+    public ItemConvertible invokeGetSeedsitem();
 }
