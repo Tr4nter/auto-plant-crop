@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.property.IntProperty;
@@ -62,9 +63,10 @@ public class ClientPlayerInteractionMixin2
 //                if (hit != null) {
                 int savedSlotValue = client.player.getInventory().selectedSlot;
                 ItemStack pickStack = null;
-                if (block.getClass() == CropBlock.class)
+                if (block instanceof CropBlock crop)
                 {
-                    pickStack = new ItemStack(((CropBlockMixin) block).invokeGetSeedsitem());
+                    ItemConvertible fuckthisshit = ((CropBlockMixin) crop).invokeGetSeedsitem();
+                    pickStack = new ItemStack(fuckthisshit);
                 } else if (block instanceof CocoaBlock)
                 {
                     pickStack = new ItemStack(Items.COCOA_BEANS);
@@ -73,7 +75,7 @@ public class ClientPlayerInteractionMixin2
                     pickStack = new ItemStack(Items.NETHER_WART);
                 }
 //                switchToItem(client, pickStack);
-
+                if (pickStack == null) return;
                 BlockHitResult res = new BlockHitResult(BlockPosToVector3d(pos), Direction.UP,pos, false);
 
                 queuePlacement(client, res, savedSlotValue, pickStack, false);
