@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 
 import tr4nt.autoplantcrops.config.ConfigFile;
 
+import static tr4nt.autoplantcrops.AutoPlantCropsClient.LOGGER;
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
 
@@ -30,6 +31,7 @@ public class BlockBreakEvent implements AttackBlockCallback {
         taggedBlockState = world.getBlockState(pos);
         BlockState cropBlockState = taggedBlockState;
         Block block = cropBlockState.getBlock();
+        LOGGER.info(String.valueOf(block.getClass()));
         if ( block instanceof CropBlock || block instanceof CocoaBlock || block instanceof NetherWartBlock) {
             IntProperty ageprop = getAge(block);
             int age = cropBlockState.get(ageprop);

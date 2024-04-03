@@ -48,6 +48,7 @@ public class AutoPlantCropsClient implements ClientModInitializer {
 //        commandList.add(newOption("boneMealMultiple", "false"));
         commandList.add(newOption("autoplantcrops", "true"));
         commandList.add(newOption("cancelBreakUnlessAged", "false"));
+        commandList.add(newOption("autoReplant", "true"));
         commandList.add(newOption("autoplantcropsDelay", "100"));
 
 

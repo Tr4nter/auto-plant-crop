@@ -35,7 +35,13 @@ public class Ticker implements ClientTickEvents.StartTick {
 //            AutoPlantCropsClient.LOGGER.info(String.valueOf(Long.compare((tick()-(long) list1.get(2)),(long) list1.get(3))));
                 if (Long.compare((tick()-tick),latency)==1)
                 {
-                        switchToItem(client, pickStack);
+                    if (client.player == null)
+                    {
+                        removeQueue.add(list);
+                        return;
+
+                    }
+                    switchToItem(client, pickStack);
                     if (getStackName(client.player.getInventory().getStack(client.player.getInventory().selectedSlot)).equals(getStackName(pickStack)))
                     {
                         PlaceBlock.placeSeed(clientt, res, plantMultiple);
@@ -46,6 +52,7 @@ public class Ticker implements ClientTickEvents.StartTick {
                         }
                     }
                     removeQueue.add(list);
+
 
                 }
             }
