@@ -78,7 +78,7 @@ public class ClientPlayerInteractionMixin2
                 if (pickStack == null) return;
                 BlockHitResult res = new BlockHitResult(BlockPosToVector3d(pos), Direction.UP,pos, false);
 
-                queuePlacement(client, res, savedSlotValue, pickStack, false);
+                queuePlacement(client, res, savedSlotValue, pickStack, false, false);
 
             }
 

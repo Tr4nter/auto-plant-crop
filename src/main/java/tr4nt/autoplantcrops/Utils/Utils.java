@@ -14,6 +14,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 
+import org.jetbrains.annotations.Nullable;
 import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.mixin.CocoaBlockMixin;
@@ -26,6 +27,7 @@ import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
@@ -115,8 +117,13 @@ public class Utils {
         return sinf.ping;
     }
 
-    public static void queuePlacement(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple) {
-        if (!ConfigFile.getValue("autoReplant").getAsBoolean()) return;
+    public static void queueInteraction(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple)
+    {
+        queuePlacement(client, res, savedSlotValue, pickStack, plantMutliple, true);
+    }
+
+    public static void queuePlacement(MinecraftClient client, BlockHitResult res, int savedSlotValue, ItemStack pickStack, boolean plantMutliple, Boolean overwrite) {
+        if (!ConfigFile.getValue("autoReplant").getAsBoolean() && !overwrite) return;
         long latency = getLatency(client);
         int delay = ConfigFile.getValue("autoplantcropsDelay").getAsInt();
         ArrayList info = new ArrayList();
