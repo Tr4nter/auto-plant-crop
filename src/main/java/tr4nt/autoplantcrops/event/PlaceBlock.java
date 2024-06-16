@@ -6,6 +6,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
+import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 
 import static tr4nt.autoplantcrops.Utils.Utils.compareBlockHit;
@@ -18,9 +19,8 @@ public class PlaceBlock {
         if (!ConfigFile.getValue("autoplantcrops").getAsBoolean() || !KeyInputHandler.isOn)return ;
         BlockHitResult tempThe = new BlockHitResult(hit.getPos(), Direction.UP, hit.getBlockPos(), hit.isInsideBlock());
         if (client.world == null) return;
-        Block block = client.world.getBlockState(tempThe.getBlockPos()).getBlock();
         if (client.interactionManager == null) return;
-        client.interactionManager.interactBlock(client.player,Hand.MAIN_HAND,tempThe);
+        client.interactionManager.interactBlock(client.player, Hand.MAIN_HAND,tempThe);
 
 //        if (plantMultiple) {
 //            // sorry not sorry

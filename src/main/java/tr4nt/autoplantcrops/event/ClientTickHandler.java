@@ -11,6 +11,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
+import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
@@ -58,7 +59,7 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                     }
 
                 }
-            } else if (ConfigFile.getValue("autoBoneMeal").getAsBoolean() && onCropBlock && getStackName(item).equals("bone_meal") )
+            } else if (ConfigFile.getValue("autoBoneMeal").getAsBoolean() && onCropBlock && getStackName(item).contains("bone_meal") )
             {
                 BlockHitResult tempres = getHit(client);
                 if (tempres != null)
