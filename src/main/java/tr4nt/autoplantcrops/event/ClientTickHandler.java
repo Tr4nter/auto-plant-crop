@@ -15,6 +15,7 @@ import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
+import tr4nt.autoplantcrops.mixin.PlayerInventoryAccessor;
 
 public class ClientTickHandler implements ClientTickEvents.StartTick {
     private static long boneMealTick = tick();
@@ -31,7 +32,8 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
             BlockState state = client.player.getSteppingBlockState();
            Block block = state.getBlock();
            PlayerInventory inv = client.player.getInventory();
-           ItemStack item = inv.getStack(inv.selectedSlot);
+           int selectedSlot = ((PlayerInventoryAccessor) inv).getSelectedSlot();
+           ItemStack item = inv.getStack(selectedSlot);
            Block itemBlock = Block.getBlockFromItem(item.getItem());
 
            BlockPos upPos = client.player.getSteppingPos().up();
@@ -93,14 +95,14 @@ public class ClientTickHandler implements ClientTickEvents.StartTick {
                     if ((hoeing && finishedWaitForHoeingDelay) || (!hoeing && finishedWaitForDelay) )
                     {
 //                        boolean multiple = hoeing ? ConfigFile.getValue("farmLandMultiple").getAsBoolean() : ConfigFile.getValue("boneMealMultiple").getAsBoolean();
-                        queueInteraction(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), false);
+                        queueInteraction(client, res, ((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot(), client.player.getInventory().getStack(((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot()), false);
                         if (!hoeing)  boneMealTick = tick();
                         if (hoeing) hoeingTick = tick();
                     }
 
                 } else
                 {
-                    queueInteraction(client, res, client.player.getInventory().selectedSlot, client.player.getInventory().getStack(client.player.getInventory().selectedSlot), false);
+                    queueInteraction(client, res, ((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot(), client.player.getInventory().getStack(((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot()), false);
                 }
             }
 
