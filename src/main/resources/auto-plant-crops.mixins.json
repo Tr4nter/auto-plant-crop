@@ -6,7 +6,8 @@
     "ClientPlayerInteractionMixin2",
     "CocoaBlockMixin",
     "CropBlockMixin",
-    "NetherWartBlockMixin"
+    "NetherWartBlockMixin",
+    "PlayerInventoryAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

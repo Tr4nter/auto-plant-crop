@@ -24,6 +24,7 @@ import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.BlockBreakEvent;
 import tr4nt.autoplantcrops.event.KeyInputHandler;
+import tr4nt.autoplantcrops.mixin.PlayerInventoryAccessor;
 
 import static tr4nt.autoplantcrops.Utils.Utils.*;
 
@@ -61,7 +62,7 @@ public class ClientPlayerInteractionMixin2
 //                HitResult hit = client.crosshairTarget;
 
 //                if (hit != null) {
-                int savedSlotValue = client.player.getInventory().selectedSlot;
+                int savedSlotValue = ((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot();
                 ItemStack pickStack = null;
                 if (block instanceof CropBlock crop)
                 {

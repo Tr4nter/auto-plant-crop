@@ -8,6 +8,7 @@ import tr4nt.autoplantcrops.AutoPlantCropsClient;
 import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.event.KeyInputHandler;
 import tr4nt.autoplantcrops.event.PlaceBlock;
+import tr4nt.autoplantcrops.mixin.PlayerInventoryAccessor;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -42,7 +43,7 @@ public class Ticker implements ClientTickEvents.StartTick {
 
                     }
                     switchToItem(client, pickStack);
-                    if (getStackName(client.player.getInventory().getStack(client.player.getInventory().selectedSlot)).equals(getStackName(pickStack)))
+                    if (getStackName(client.player.getInventory().getStack(((PlayerInventoryAccessor) client.player.getInventory()).getSelectedSlot())).equals(getStackName(pickStack)))
                     {
                         PlaceBlock.placeSeed(clientt, res, plantMultiple);
                         if (ConfigFile.getValue("switchBackToSlot").getAsBoolean())

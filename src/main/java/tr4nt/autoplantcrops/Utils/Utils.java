@@ -20,6 +20,7 @@ import tr4nt.autoplantcrops.config.ConfigFile;
 import tr4nt.autoplantcrops.mixin.CocoaBlockMixin;
 import tr4nt.autoplantcrops.mixin.CropBlockMixin;
 import tr4nt.autoplantcrops.mixin.NetherWartBlockMixin;
+import tr4nt.autoplantcrops.mixin.PlayerInventoryAccessor;
 import tr4nt.autoplantcrops.scheduler.Ticker;
 
 import java.sql.Date;
@@ -57,7 +58,7 @@ public class Utils {
             ItemStack stack = client.player.getInventory().getStack(i);
             if (getStackName(stack).equals(getStackName(item))) {
                 if (i <= 8) {
-                    client.player.getInventory().selectedSlot = i;
+                    ((PlayerInventoryAccessor) client.player.getInventory()).setSelectedSlot(i);
                     return;
                 } else {
                     int emptySlot = client.player.getInventory().getEmptySlot();
@@ -71,7 +72,7 @@ public class Utils {
                         client.interactionManager.clickSlot(0, i, 0, SlotActionType.QUICK_MOVE, client.player);
 
                         client.player.closeHandledScreen();
-                        client.player.getInventory().selectedSlot = emptySlot;
+                        ((PlayerInventoryAccessor) client.player.getInventory()).setSelectedSlot(emptySlot);
 
                         return;
                     }
@@ -88,7 +89,7 @@ public class Utils {
 
     public static void switchToSlot(MinecraftClient client, int slot) {
         assert client.player != null;
-        client.player.getInventory().selectedSlot = slot;
+        ((PlayerInventoryAccessor) client.player.getInventory()).setSelectedSlot(slot);
 
     }
 
